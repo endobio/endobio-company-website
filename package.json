@@ -20,6 +20,9 @@
   "keywords": [
     "gatsby"
   ],
+  "resolutions": {
+    "react-server-dom-webpack/react": "18.2.0"
+  },
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
