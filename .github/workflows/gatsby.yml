@@ -25,6 +25,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -39,16 +40,19 @@ jobs:
           else
             echo "Unable to determine package manager"
             exit 1
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: gatsby
+
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -58,12 +62,15 @@ jobs:
           key: ${{ runner.os }}-gatsby-build-${{ hashFiles('package-lock.json', 'gatsby-config.js') }}
           restore-keys: |
             ${{ runner.os }}-gatsby-build-
+
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --legacy-peer-deps
+
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
